@@ -337,7 +337,7 @@ app.get('/fetch_products', async (req, res) => {
   });
 });
 
-app.get('/allmusic', async (req, res) => {
+app.get('/insertall', async (req, res) => {
   await Article.insertMany(Products)
     .then(function () {
       console.log('Data inserted'); // Success
