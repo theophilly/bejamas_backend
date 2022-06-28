@@ -4,6 +4,88 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import Article from './models/Article.js';
+import Post from './models/Post.js';
+
+const Posts = [
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52126993429_177b51f9fe_w.jpg',
+      alt: 'homepage image',
+    },
+    category: 'e-commerce',
+    etr: '4 min',
+    title: 'How to configure the DNS to point to your VetrinaLive',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52125727592_e0342033cb_w.jpg',
+      alt: 'homepage image',
+    },
+    category: 'politics',
+    etr: '6 min',
+    title:
+      'You need to set a width on the container to be able to truncate the text inside',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52126749401_0942a85c9c_w.jpg',
+      alt: 'dd',
+    },
+    category: 'sports',
+    etr: '10 min',
+    title:
+      'Manchester United are in disarray and its the toughest job of Erik ten Hags life, says Paul Merson',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52126993459_ccc4cde51b_w.jpg',
+      alt: 'dd',
+    },
+    category: 'finance',
+    etr: '2 min',
+    title:
+      'Sterling Alternative Finance launches investment platform Sterling Alternative Finance launches investment platform',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52125727642_268b8c5239_w.jpg',
+      alt: 'dd',
+    },
+    category: 'tech',
+    etr: '4 min',
+    title:
+      'A Big Bitcoin Warning…And Other Small Business Tech News This Week A Big Bitcoin Warning',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52126993499_eaf84e274f_w.jpg',
+      alt: 'dd',
+    },
+    category: 'africa',
+    etr: '4 min',
+    title:
+      'Fertiliser shortage hits African farmers battling food crisis Fertiliser shortage hits African ',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52125727707_0a007ec75f_w.jpg',
+      alt: 'dd',
+    },
+    category: 'tech',
+    etr: '5 min',
+    title:
+      'Honeywell Group partners Lagos Innovates to upskill young tech entrepreneurs Honeywell Group partners',
+  },
+  {
+    image: {
+      src: 'https://live.staticflickr.com/65535/52125727547_f4943cb7e2_w.jpg',
+      alt: 'dd',
+    },
+    category: 'investments',
+    etr: '9 min',
+    title: '5 Key Ingredients Every Company Needs in Their Strategic Narrative',
+  },
+];
 
 const Products = [
   {
@@ -28,17 +110,17 @@ const Products = [
       recommendations: [
         {
           src:
-            'https://live.staticflickr.com/65535/52121597813_477d38c645_b.jpg',
+            'https://live.staticflickr.com/65535/52126776193_6935f84aed_w.jpg',
           alt: 'sdd',
         },
         {
           src:
-            'https://live.staticflickr.com/65535/52121812034_0a1987f458_b.jpg',
+            'https://live.staticflickr.com/65535/52125727547_f4943cb7e2_w.jpg',
           alt: 'dff',
         },
         {
           src:
-            'https://live.staticflickr.com/65535/52122065705_65d5855fd4_b.jpg',
+            'https://live.staticflickr.com/65535/52126749301_147c75bd88_w.jpg',
           alt: 'sder',
         },
       ],
@@ -50,7 +132,7 @@ const Products = [
     price: 3.89,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121597103_c442e9e71b_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126993429_177b51f9fe_w.jpg',
       alt: 'homepage image',
     },
     bestseller: false,
@@ -63,7 +145,7 @@ const Products = [
     price: 93.89,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121811434_9d9fe41e10_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727592_e0342033cb_w.jpg',
       alt: 'homepage image',
     },
     bestseller: false,
@@ -76,7 +158,7 @@ const Products = [
     price: 100,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52122065250_e48047be76_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126749401_0942a85c9c_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -89,7 +171,7 @@ const Products = [
     price: 101,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52122065285_961e7fff84_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126993459_ccc4cde51b_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -102,7 +184,7 @@ const Products = [
     price: 101,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52122065310_d4c8f48712_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727642_268b8c5239_w.jpg',
       alt: 'dd',
     },
     bestseller: true,
@@ -115,7 +197,7 @@ const Products = [
     price: 101,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52120532327_56e3463410_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126993499_eaf84e274f_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -128,7 +210,7 @@ const Products = [
     price: 200.22,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121811644_7de29fccbc_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727707_0a007ec75f_w.jpg',
       alt: 'dd',
     },
     bestseller: true,
@@ -141,7 +223,7 @@ const Products = [
     price: 4000,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121597368_9710a9a3ef_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52127248650_9d54829e53_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -154,7 +236,7 @@ const Products = [
     price: 70.89,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121811724_cf093ecb6e_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126749491_cca8ba6415_w.jpg',
       alt: 'homepage image',
     },
     bestseller: true,
@@ -167,7 +249,7 @@ const Products = [
     price: 900,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121566141_3776e67ffc_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727812_bd85f29845_w.jpg',
       alt: 'homepage image',
     },
     bestseller: false,
@@ -180,7 +262,7 @@ const Products = [
     price: 300,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52122065250_e48047be76_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52127248685_3f3ed74b01_w.jpg',
       alt: 'dd',
     },
     bestseller: true,
@@ -193,7 +275,7 @@ const Products = [
     price: 501,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121811919_b2ffdbfbed_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126776548_703f71aba5_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -206,7 +288,7 @@ const Products = [
     price: 101,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52122065705_65d5855fd4_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52127248730_8b2190144d_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -219,7 +301,7 @@ const Products = [
     price: 11,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121597663_ee8d10f2b4_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126776598_a618d69d91_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -232,7 +314,7 @@ const Products = [
     price: 20.22,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121597663_ee8d10f2b4_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727912_267be5e123_w.jpg',
       alt: 'dd',
     },
     bestseller: true,
@@ -245,7 +327,7 @@ const Products = [
     price: 203,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121812034_0a1987f458_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52127248805_5b43c06d1f_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -258,7 +340,7 @@ const Products = [
     price: 1,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121597813_477d38c645_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126776193_6935f84aed_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -271,7 +353,7 @@ const Products = [
     price: 111,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52122065905_51a2459987_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727547_f4943cb7e2_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -284,7 +366,7 @@ const Products = [
     price: 306.22,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121597903_13f0c2de9b_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52126993429_177b51f9fe_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -297,7 +379,7 @@ const Products = [
     price: 405,
     currency: 'USD',
     image: {
-      src: 'https://live.staticflickr.com/65535/52121523483_987e776e29_b.jpg',
+      src: 'https://live.staticflickr.com/65535/52125727592_e0342033cb_w.jpg',
       alt: 'dd',
     },
     bestseller: false,
@@ -337,8 +419,25 @@ app.get('/fetch_products', async (req, res) => {
   });
 });
 
+app.get('/fetch_posts', async (req, res) => {
+  Post.find({}).then(function (posts) {
+    res.send(posts);
+  });
+});
+
 app.get('/insertall', async (req, res) => {
   await Article.insertMany(Products)
+    .then(function () {
+      console.log('Data inserted'); // Success
+    })
+    .catch(function (error) {
+      console.log(error); // Failure
+    });
+  res.json({ message: 'you are welcome' });
+});
+
+app.get('/insertallposts', async (req, res) => {
+  await Post.insertMany(Posts)
     .then(function () {
       console.log('Data inserted'); // Success
     })
